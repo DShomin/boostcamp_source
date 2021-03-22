@@ -30,7 +30,7 @@ if __name__ == '__main__':
     model_name = 'xgb'
 
     # Load and base pre-process
-    data = pd.read_csv(DATA_PATH, parse_dates=['order_date'])
+    data = pd.read_csv(os.path.join(DATA_PATH, 'train.csv'), parse_dates=['order_date'])
 
     data['customer_id'] = data['customer_id'].astype(int)
     data['year_month'] = data.order_date.dt.strftime('%Y-%m')

@@ -14,7 +14,7 @@ def evaluation(gt_path, pred_path):
 
     score = roc_auc_score(gt['label'], pred['probability'])
 
-    return f'{score:.2f}%'
+    return f'{score:.4f}%'
 
 if __name__ == '__main__':
     gt_path = os.environ.get('SM_GROUND_TRUTH_DIR')

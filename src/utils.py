@@ -17,6 +17,8 @@ def print_score(label, pred, prob_thres=0.5):
     print('ROC AUC Score: {:.5f}'.format(roc_auc_score(label, pred)))
 
 def save_model(model, path):
+    dir_ = path.split('/')[:-1]
+    os.makedirs('/'.join(dir_), exist_ok=True)
     joblib.dump(model, path)
 
 def load_model(path):
