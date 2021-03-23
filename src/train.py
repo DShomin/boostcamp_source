@@ -21,8 +21,8 @@ from model import train_RF_model, train_lgb_model, train_xgb_model, train_ctb_mo
 TOTAL_THRES = 300
 SEED = 42
 seed_everything(SEED)
-DATA_PATH = os.environ.get('SM_CHANNEL_TRAIN', '/data')
-MODEL_PATH = os.environ.get('SM_MODEL_DIR', '/model')
+DATA_PATH = os.environ.get('SM_CHANNEL_TRAIN', '../input')
+MODEL_PATH = os.environ.get('SM_MODEL_DIR', '../model')
 
 if __name__ == '__main__':
     

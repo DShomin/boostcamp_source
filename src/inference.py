@@ -10,13 +10,13 @@ from model import train_RF_model, train_lgb_model, get_importance
 TOTAL_THRES = 300
 SEED = 42
 seed_everything(SEED)
-DATA_PATH = os.environ.get('SM_CHANNEL_TRAIN', '/data')
-MODEL_PATH = os.environ.get('SM_MODEL_DIR', '/model')
-OUTPUT_PATH = os.environ.get('SM_OUTPUT_DATA_DIR', '/output')
+DATA_PATH = os.environ.get('SM_CHANNEL_TRAIN', '../input')
+MODEL_PATH = os.environ.get('SM_MODEL_DIR', '../model')
+OUTPUT_PATH = os.environ.get('SM_OUTPUT_DATA_DIR', '../output')
 
 if __name__ == '__main__':
     model_name = 'xgb'
-    data = pd.read_csv(DATA_PATH, parse_dates=["order_date"])
+    data = pd.read_csv(os.path.join(DATA_PATH, 'train.csv'), parse_dates=["order_date"])
     data['customer_id'] = data['customer_id'].astype(int)
     data['year_month'] = data.order_date.dt.strftime('%Y-%m')
 
@@ -42,4 +42,5 @@ if __name__ == '__main__':
 
     sub = pd.read_csv(os.path.join(DATA_PATH, 'sample_submission.csv'))
     sub['probability'] = preds
+    os.makedirs(OUTPUT_PATH, exist_ok=True)
     sub.to_csv(os.path.join(OUTPUT_PATH, 'sub_test.csv'), index=False)
