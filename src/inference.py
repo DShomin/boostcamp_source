@@ -43,4 +43,4 @@ if __name__ == '__main__':
     sub = pd.read_csv(os.path.join(DATA_PATH, 'sample_submission.csv'))
     sub['probability'] = preds
     os.makedirs(OUTPUT_PATH, exist_ok=True)
-    sub.to_csv(os.path.join(OUTPUT_PATH, 'sub_test.csv'), index=False)
+    sub.to_csv(os.path.join(OUTPUT_PATH, 'submission.csv'), index=False)
