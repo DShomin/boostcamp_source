@@ -1,24 +1,23 @@
 import pandas as pd
 from sklearn.metrics import roc_auc_score
-import os
 
+# 평가 함수
 def evaluation(gt_path, pred_path):
-    '''
-    Args:
-        gt_path (string) : ropot directory of ground truth file
-        pred_path (string) : root directory of prediction file (output of inference.py)
-    '''
+    # Ground Truth 경로에서 정답 파일 읽기
+    label = pd.read_csv(gt_path + '/label.csv')['label']
+    
+    # 테스트 결과 예측 파일 읽기
+    preds = pd.read_csv(pred_path + '/submission.csv')['probability']
 
-    gt = pd.read_csv(gt_path)
-    pred = pd.read_csv(pred_path)
+    # AUC 스코어 계산
+    score = roc_auc_score(label, preds)
+    
+    return score
 
-    score = roc_auc_score(gt['label'], pred['probability'])
-
-    return f'{score:.4f}%'
 
 if __name__ == '__main__':
-    gt_path = os.environ.get('SM_GROUND_TRUTH_DIR')
-    pred_path = os.environ.get('SM_OUTPUT_DATA_DIR')
-
-    result_str = evaluation(gt_path, pred_path)
-    print(f'Final Score: {result_str}')
+    gt_path = '../input'
+    pred_path = '.'
+    
+    print(evaluation(gt_path, pred_path))
+    
