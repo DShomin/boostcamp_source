@@ -19,17 +19,17 @@ import lightgbm as lgb
 
 # Custom library
 from utils import seed_everything, print_score
-from train import generate_label, feature_engineering1
+from features import generate_label, feature_engineering1
 
 
 TOTAL_THRES = 300 # 구매액 임계값
 SEED = 42 # 랜덤 시드
 seed_everything(SEED) # 시드 고정
 
-data_dir = os.environ['SM_CHANNEL_EVAL']
-model_dir = os.environ['SM_CHANNEL_MODEL']
-output_dir = os.environ['SM_OUTPUT_DATA_DIR']
 
+data_dir = '../input' # os.environ['SM_CHANNEL_TRAIN']
+model_dir = '../model' # os.environ['SM_MODEL_DIR']
+output_dir = '../output' # os.environ['SM_OUTPUT_DATA_DIR']
 
 '''
     머신러닝 모델 없이 입력인자으로 받는 year_month의 이전 달 총 구매액을 구매 확률로 예측하는 베이스라인 모델
@@ -234,5 +234,7 @@ if __name__ == '__main__':
     # 테스트 예측 결과 저장
     sub['probability'] = test_preds
     
+    
+    os.makedirs(output_dir, exist_ok=True)
     # 제출 파일 쓰기
-    sub.to_csv(output_dir + '/submission.csv', index=False)
+    sub.to_csv(os.path.join(output_dir , 'output.csv'), index=False)

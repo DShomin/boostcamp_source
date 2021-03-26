@@ -18,8 +18,8 @@ TOTAL_THRES = 300 # 구매액 임계값
 SEED = 42 # 랜덤 시드
 seed_everything(SEED) # 시드 고정
 
-data_dir = os.environ['SM_CHANNEL_TRAIN']
-model_dir = os.environ['SM_MODEL_DIR']
+data_dir = '../input/train.csv' # os.environ['SM_CHANNEL_TRAIN']
+model_dir = '../model' # os.environ['SM_MODEL_DIR']
 
 
 '''
